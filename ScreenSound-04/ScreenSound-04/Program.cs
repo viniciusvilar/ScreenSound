@@ -1,26 +1,22 @@
-﻿//using (HttpClient client = new HttpClient())
-//{
-//    try
-//    {
-//        string resposta = await client.GetStringAsync("https://guilhermeonrails.github.io/api-csharp-songs/songs.json");
-//        Console.WriteLine(resposta);
-//    }
-//    catch (Exception ex)
-//    {
-//        Console.WriteLine($"Temos um problema: {ex.Message}");
-//    }
-    
-//}
+﻿using ScreenSound_04.Filtro;
+using ScreenSound_04.Modelos;
+using System.Text.Json;
 
-try
+using (HttpClient client = new HttpClient())
 {
-    for (int i = 3; i >= 0; i--)
+    try
     {
-        Console.WriteLine($"Valor do I: {i}");
-        Console.WriteLine($"{10 / i}");
+        string resposta = await client.GetStringAsync("https://guilhermeonrails.github.io/api-csharp-songs/songs.json");
+        //Console.WriteLine(resposta);
+        var musicas = JsonSerializer.Deserialize<List<Musica>>(resposta)!;
+        //LinqFilter.FiltrarTodosOsGenerosMusicais(musicas);
+        //LinqOrder.ExibirListaDeArtistasOrdenados(musicas);
+        //LinqFilter.FiltrarArtistasPorGeneroMusical(musicas, "pop");
+        LinqFilter.FiltrarMusicasDeUmArtista(musicas, "Michael Jackson");
     }
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Tivemos um problema: {ex.Message}");
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Temos um problema: {ex.Message}");
+    }
+
 }
